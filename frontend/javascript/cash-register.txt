@@ -1,0 +1,62 @@
+function checkCashRegister(price, cash, cid) {
+  const changeValue = cash - price;
+  const AMOUNT_MAP = {
+   "PENNY": 0.01,
+   "NICKEL": 0.05,
+   "DIME": 0.1,
+   "QUARTER": 0.25,
+   "ONE": 1,
+   "FIVE": 5,
+   "TEN": 10,
+   "TWENTY": 20,
+   "ONE HUNDRED": 100,
+  };
+
+  let cashRegister = [...cid].reverse().map(item => {
+    return {
+      unit: item[0],
+      amount: item[1],
+      unit_price: AMOUNT_MAP[item[0]] * 10 * 10,
+      count: (item[1] * 10 * 10) / (AMOUNT_MAP[item[0]] * 10 * 10)
+    };
+  })
+
+  let status = "OPEN";
+  let change = [];
+
+  if (changeValue === casherTotal(cid)) {
+    status = "CLOSED";
+    change = [...cid];
+  } else {
+    const lastChange = cashRegister.reduce((price, unit) => {
+      let count = 0;
+      if (price >= unit.unit_price) {
+         while(price >= unit.unit_price && count < unit.count) {
+           count++;
+           price -= unit.unit_price; 
+         }
+      }
+
+      if (count !== 0) {
+        change.push([unit.unit, count * unit.unit_price / 100]);
+      }
+      return price;
+    }, changeValue * 10 * 10);
+
+    if (lastChange !== 0) {
+      status = "INSUFFICIENT_FUNDS";
+      change = [];
+    }
+  }
+
+  let returnObj = {status, change};
+  return returnObj;
+}
+
+function casherTotal(cid) {
+  return cid.reduce((total, val) => {
+    return total += val[1];
+  }, 0);
+}
+
+console.log(checkCashRegister(19.5, 20, [["PENNY", 0.5], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]));
