@@ -1,0 +1,24 @@
+#root {
+  font-family: 'Raleway', sans-serif;
+}
+
+#text {
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.75em;
+  margin-bottom: 10px;
+}
+
+#author {
+  text-align: right;
+  font-size: 1em;
+  margin-bottom: 20px;
+}
+
+#tweet-quote {
+  float: left;
+}
+
+#new-quote {
+  float: right;
+}
