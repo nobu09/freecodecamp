@@ -1,0 +1,22 @@
+#root {
+  font-family: 'Raleway', sans-serif;
+}
+
+#root > * {
+  display: block;
+  margin: 30px auto;
+}
+
+h3.title {
+  text-align: center;
+}
+
+#editor, #preview {
+  width: 800px;
+  padding: 10px;
+  line-height: 1.5;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 1px #999;
+}
+
