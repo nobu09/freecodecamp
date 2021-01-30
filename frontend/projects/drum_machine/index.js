@@ -46,79 +46,65 @@ const drumPads = [
   },
 ]
 
-class DrumMachine extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { sound: "" };
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-  }
+function DrumMachine(props) {
+  const [sound, setSound] = React.useState("");
   
-  handleKeyPress(event) {
+  function handleKeyPress(event) {
     const pressedPad = drumPads.find(pad => event.key.toUpperCase() === pad.keyId)
     if (pressedPad) {
-      this.setState({ sound: pressedPad.sound });
       const button = document.getElementById(pressedPad.sound);
       button.click();
     };    
   }
   
-  handleClick(keyId, sound) {
-    this.setState({ sound: sound });
+  function handleClick(keyId, sound) {   
+    setSound(sound);
     const audio = document.getElementById(keyId);
     audio.play();
   }
   
-  componentDidMount() {
+  React.useEffect(() => {
+    console.log("useEffect")
     drumPads.forEach(pad => {
       const key = document.getElementById(pad.keyId);
       key.load();
     })    
     
-    window.addEventListener('keypress', this.handleKeyPress);
-    window.focus();    
-  }
-  
-  componentWillUnMount() {
-    this.removeEventListener('keypress', this.handleKeyPress);
-  }
+    window.addEventListener('keypress', handleKeyPress);
+    window.focus();
+    
+    return () => {
+      this.removeEventListener('keypress', handleKeyPress);
+    }
+  }, [])
  
-  render() {
-    return (
-      <div id="drum-machine">
-        <div id="title">Drum Machine</div>
-        <div id="drum-pads">
-          {drumPads.map(pad => <DrumPad key={pad.keyId} {...pad} handleClick={this.handleClick} />)}
-        </div>
-        <div id="display">{this.state.sound}</div>
+  return (
+    <div id="drum-machine">
+      <div id="title">Drum Machine</div>
+      <div id="drum-pads">
+        {drumPads.map(pad => <DrumPad key={pad.keyId} {...pad} handleClick={handleClick} />)}
       </div>
-    );
-  } 
+      <div id="display">{sound}</div>
+    </div>
+  );
 }
 
-class DrumPad extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
+function DrumPad(props)  {
+  const handleClick = () =>  {
+    props.handleClick(props.keyId, props.sound);
   }
-  
-  handleClick() {
-    this.props.handleClick(this.props.keyId, this.props.sound);
-  }
-  
-  render() {
-    return (
-      <>
-        <button id={this.props.sound} className="drum-pad btn btn-secondary" onClick={this.handleClick}>
-          {this.props.keyId}
-          <audio className="clip" id={this.props.keyId} src={this.props.soundSource} />
-        </button>
-      </>
-    );
-  }
+
+  return (
+    <>
+      <button id={props.sound} className="drum-pad btn btn-secondary" onClick={handleClick}>
+        {props.keyId}
+        <audio className="clip" id={props.keyId} src={props.soundSource} />
+      </button>
+    </>
+  );
 }
 
 ReactDOM.render(
   <DrumMachine />,
   document.getElementById("root")
-);
+);;
