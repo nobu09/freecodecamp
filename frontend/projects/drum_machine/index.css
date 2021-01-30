@@ -1,0 +1,25 @@
+#root {
+  font-family: 'Bungee Shade', cursive;
+}
+
+#drum-machine {
+  text-align: center;
+}
+
+#title {
+  font-size: 150%;
+  margin: 30px;
+}
+
+#drum-pads {
+  display: inline-block;
+  width: 360px;
+  height: 360px;
+}
+
+.drum-pad {
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+  box-shadow: gray 5px 5px 5px;
+}
