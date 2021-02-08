@@ -1,118 +1,153 @@
 const numbers = [
   {
-    name: 'zero',
-    value: 0
+    name: "zero",
+    value: 0,
   },
   {
-    name: 'one',
-    value: 1
+    name: "one",
+    value: 1,
   },
   {
-    name: 'two',
-    value: 2
+    name: "two",
+    value: 2,
   },
   {
-    name: 'three',
-    value: 3
+    name: "three",
+    value: 3,
   },
   {
-    name: 'four',
-    value: 4
+    name: "four",
+    value: 4,
   },
   {
-    name: 'five',
-    value: 5
+    name: "five",
+    value: 5,
   },
   {
-    name: 'six',
-    value: 6
+    name: "six",
+    value: 6,
   },
   {
-    name: 'seven',
-    value: 7
+    name: "seven",
+    value: 7,
   },
   {
-    name: 'eight',
-    value: 8
+    name: "eight",
+    value: 8,
   },
   {
-    name: 'nine',
-    value: 9
-  }
-]
+    name: "nine",
+    value: 9,
+  },
+];
 
 const operations = [
   {
-    name: 'add',
-    symbol: '+',
+    name: "add",
+    symbol: "+",
   },
   {
-    name: 'subtract',
-    symbol: '-',
+    name: "subtract",
+    symbol: "-",
   },
   {
-    name: 'multiply',
-    symbol: 'x',
+    name: "multiply",
+    symbol: "x",
   },
   {
-    name: 'divide',
-    symbol: '/'
-  }
-]
+    name: "divide",
+    symbol: "/",
+  },
+];
 
 function Calculator(props) {
   const [result, setResult] = React.useState(0);
+  const [number, setNumber] = React.useState(0);
+  const [preNumber, setPreNumber] = React.useState(0);
+  const [operation, setOperation] = React.useState("");
+  const [display, setDisplay] = React.useState(0);
 
-  function handleClick() {
-     setResult(0);
+  function handleClearClick() {
+    setNumber(0);
+    setPreNumber(0);
+    setResult(0);
+    setDisplay(0);
   }
 
-  function handleNumsClick(number) {
-    let displayNumber = String(result).concat(String(number));
-    setResult(Number(displayNumber));
+  function handleNumsClick(num) {
+    let resultNum = Number(String(number).concat(String(num)));
+    setNumber(resultNum);
+    setDisplay(resultNum);
   }
+
+  function handleOperation(symbol) {
+    setOperation(symbol);
+    setPreNumber(number);
+    setNumber(0);
+    setDisplay(symbol);
+    console.log(`number is ${number}, preNumber is ${preNumber}`);
+  }
+
+  function handleEqual() {}
 
   return (
     <div id="calcuator">
-      <div id="display">{result}</div>
-      <button id="clear" onClick={handleClick}>AC</button>
+      <div id="display">{display}</div>
+      <button id="clear" onClick={handleClearClick}>
+        AC
+      </button>
       <br />
-      {
-        operations.map(operation =>
-          <Operation key={operation.name} name={operation.name} symbol={operation.symbol} />
-        )
-      }
+      {operations.map((operation) => (
+        <Operation
+          key={operation.name}
+          name={operation.name}
+          symbol={operation.symbol}
+          handleOperation={handleOperation}
+        />
+      ))}
       <br />
-      {
-        numbers.map(num => {
-          return <Num key={num.name} name={num.name} value={num.value} handleClick={handleNumsClick} />;
-        })
-      }
+      {numbers.map((num) => {
+        return (
+          <Num
+            key={num.name}
+            name={num.name}
+            value={num.value}
+            handleClick={handleNumsClick}
+          />
+        );
+      })}
       <br />
       <button id="decimal">.</button>
       <br />
-      <button id="equals">=</button>
+      <button id="equals" onClick={handleEqual}>
+        =
+      </button>
     </div>
   );
 }
 
 function Num(props) {
-  function handleClick() {
-    props.handleClick(props.value);
-  }
-
   return (
-    <button id={props.name} className="number" onClick={handleClick}>{props.value}</button>
+    <button
+      id={props.name}
+      className="number"
+      onClick={() => props.handleClick(props.value)}
+    >
+      {props.value}
+    </button>
   );
 }
 
 function Operation(props) {
   return (
-    <button id={props.name} className="operation">{props.symbol}</button>
+    <button
+      id={props.name}
+      className="operation"
+      onClick={() => props.handleOperation(props.symbol)}
+    >
+      {props.symbol}
+    </button>
   );
 }
 
-ReactDOM.render(
-  <Calculator />,
-  document.getElementById("root")
-);
+ReactDOM.render(<Calculator />, document.getElementById("root"));
