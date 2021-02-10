@@ -62,9 +62,8 @@ const operations = [
 
 function Calculator(props) {
   const [result, setResult] = React.useState(0);
-  const [number, setNumber] = React.useState(0);
-  const [preNumber, setPreNumber] = React.useState(0);
-  const [operation, setOperation] = React.useState('');
+  const [nums, setNums] = React.useState([0]);
+  const [operators, setOperators] = React.useState([]);
   const [display, setDisplay] = React.useState(0);
   
   function handleClearClick() {
@@ -73,19 +72,20 @@ function Calculator(props) {
   }
   
   function handleNumsClick(num) {
-    let resultNum = Number(String(number).concat(String(num)));
-    setNumber(resultNum);
-    setDisplay(resultNum);
+    let resultNum = Number(String(nums).concat(String(num)));
+    console.log(num);
+    console.log(resultNum);
+    console.log([...nums]);  
+    console.log(...nums.splice(0, 1, resultNum));
+    setNums([...nums].splice(nums.length - 1, 1, resultNum));
+    setDisplay();
   }
   
   function handleOperation(symbol) {
-    setResult(calculate(preNumber, number, symbol, result));
-    console.log(`result: ${result} preNumber: ${preNumber} number: ${number}`)
-    setOperation(symbol);
-    setPreNumber(result);
-    setNumber(0);
+    setResult(calculate(nums[nums.length - 2], nums[nums.length - 1], symbol, result));
+    setOperators(operators.concat(symbol));
+    // setNums();
     setDisplay(symbol);
-    console.log(`result: ${result} preNumber: ${preNumber} number: ${number}`)
   }
   
   function handleEqual() {
@@ -94,24 +94,24 @@ function Calculator(props) {
   }
   
   function clear() {
-    setNumber(0);
-    setPreNumber(0);
+    setNums([0]);
+    setOperators([]);
     setResult(0);
   }
   
-  function calculate(preNum, num, operator, result) {
+  function calculate(num1, num2, operator, result) {
     switch(operator) {
       case '+':
-        return preNum + num;
+        return num1 + num2;
         break;
       case '-':
-        return preNum - num;
+        return num1 - num2;
         break;
       case 'x':
-        return preNum * num;
+        return num1 * num2;
         break;
       case '/':
-        return preNum / num;
+        return num1 / num2;
         break;
     }
   }
@@ -156,3 +156,4 @@ ReactDOM.render(
   <Calculator />,
   document.getElementById("root")
 );
+
