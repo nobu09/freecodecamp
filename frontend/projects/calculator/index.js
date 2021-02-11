@@ -1,4 +1,4 @@
-const numbers = [  
+const numbers = [
   {
     name: 'zero',
     value: 0
@@ -72,19 +72,17 @@ function Calculator(props) {
   }
   
   function handleNumsClick(num) {
-    let resultNum = Number(String(nums).concat(String(num)));
-    console.log(num);
-    console.log(resultNum);
-    console.log([...nums]);  
-    console.log(...nums.splice(0, 1, resultNum));
-    setNums([...nums].splice(nums.length - 1, 1, resultNum));
-    setDisplay();
+    let resultNum = Number(String(nums[nums.length-1]).concat(String(num)));
+    const resultNums = [...nums];
+    resultNums.splice(resultNums.length - 1,1,resultNum); 
+    setNums(resultNums);
+    setDisplay(resultNum);
   }
   
   function handleOperation(symbol) {
     setResult(calculate(nums[nums.length - 2], nums[nums.length - 1], symbol, result));
     setOperators(operators.concat(symbol));
-    // setNums();
+    setNums([...nums, 0]);
     setDisplay(symbol);
   }
   
@@ -156,4 +154,3 @@ ReactDOM.render(
   <Calculator />,
   document.getElementById("root")
 );
-
