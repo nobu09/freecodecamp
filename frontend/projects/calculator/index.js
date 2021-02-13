@@ -1,4 +1,4 @@
-const numbers = [
+const numbers = [  
   {
     name: 'zero',
     value: 0
@@ -64,7 +64,8 @@ function Calculator(props) {
   const [result, setResult] = React.useState(0);
   const [nums, setNums] = React.useState([0]);
   const [operators, setOperators] = React.useState([]);
-  const [display, setDisplay] = React.useState(0);
+  const [display, setDisplay] = React.useState('0');
+  const [nowNumber, setNowNumber] = React.useState('');
   
   function handleClearClick() {
     clear();
@@ -73,15 +74,18 @@ function Calculator(props) {
   
   function handleNumsClick(num) {
     // 数字を配列に格納
-    const resultNum = Number(String(nums[nums.length-1]).concat(String(num)));
+    const resultNum = Number(nowNumber.concat(String(num)));
     const resultNums = [...nums];
     resultNums.splice(resultNums.length - 1, 1, resultNum);
     
     setNums(resultNums);
+    setNowNumber(String(resultNum));
     setDisplay(resultNum);
   }
   
-  function handleOperation(ope) {    
+  function handleOperation(ope) {
+    setNowNumber('');
+    
     // 計算する
     if (nums.length > 1) {
       setResult(calculate(nums, result, operators[operators.length - 1]));
@@ -107,6 +111,7 @@ function Calculator(props) {
     setNums([0]);
     setOperators([]);
     setResult(0);
+    setNowNumber('');
   }
   
   function calculate(nums, result, operator) {
@@ -128,6 +133,19 @@ function Calculator(props) {
     }
   }
   
+  function handleDecimal() {
+    if (nowNumber.slice(-1) != '.') {
+      const nowNum = nowNumber.concat('.');
+      
+      const resultNums = [...nums];
+      resultNums.splice(resultNums.length - 1, 1, Number(nowNum));
+      
+      setNums(resultNums);
+      setDisplay(nowNum);
+      setNowNumber(nowNum);
+    }
+  }
+  
   return (
     <div id="calcuator">
       <div id="display">{display}</div>
@@ -145,7 +163,7 @@ function Calculator(props) {
         })
       }
       <br />
-      <button id="decimal">.</button>
+      <button id="decimal" onClick={handleDecimal}>.</button>
       <br />
       <button id="equals" onClick={handleEqual} >=</button>
     </div>
