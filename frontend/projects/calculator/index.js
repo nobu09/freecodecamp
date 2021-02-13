@@ -72,22 +72,44 @@ function Calculator(props) {
   }
   
   function handleNumsClick(num) {
-    let resultNum = Number(String(nums[nums.length-1]).concat(String(num)));
+    // 数字を配列に格納
+    const resultNum = Number(String(nums[nums.length-1]).concat(String(num)));
     const resultNums = [...nums];
-    resultNums.splice(resultNums.length - 1,1,resultNum); 
+    resultNums.splice(resultNums.length - 1,1,resultNum);
+    
     setNums(resultNums);
     setDisplay(resultNum);
   }
   
-  function handleOperation(symbol) {
-    setResult(calculate(nums[nums.length - 2], nums[nums.length - 1], symbol, result));
-    setOperators(operators.concat(symbol));
-    setNums([...nums, 0]);
+  function handleOperation(symbol) {    
+    const targetSymbol = operators[operators.length - 1];
+
+    // 演算子を配列に格納
+    const resultOpes = [...operators, ''];
+    console.log(`handleOperation operators: ${resultOpes}`);
+    resultOpes.splice(resultOpes.length - 1, 1, symbol); 
+    setOperators(resultOpes);
     setDisplay(symbol);
+    
+    // 計算する
+    setNums([...nums, 0]);
+    if (nums.length > 1) {
+      const num1 = nums.length == 2 ? nums[0] : result;
+      setResult(calculate(nums[nums.length - 2], nums[nums.length - 1], targetSymbol));
+    }
+    console.log(resultOpes);
   }
   
   function handleEqual() {
-    setDisplay(result);
+    console.log(`handleEqual nums: ${nums}`);
+    console.log(`handleEqual operators: ${operators}`);
+    console.log(`result: ${result}`);
+
+    // 計算
+    const num1 = nums.length == 2 ? nums[0] : result;
+    console.log(operators);
+    const resultCalculate = calculate(num1, nums[nums.length - 1], operators[operators.length - 1]);
+    setDisplay(resultCalculate);
     clear();
   }
   
@@ -97,7 +119,9 @@ function Calculator(props) {
     setResult(0);
   }
   
-  function calculate(num1, num2, operator, result) {
+  function calculate(num1, num2, operator) {
+    console.log(num1, num2)
+    console.log(operator)
     switch(operator) {
       case '+':
         return num1 + num2;
