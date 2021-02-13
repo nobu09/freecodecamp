@@ -1,4 +1,4 @@
-const numbers = [  
+const numbers = [
   {
     name: 'zero',
     value: 0
@@ -74,13 +74,14 @@ function Calculator(props) {
   
   function handleNumsClick(num) {
     // 数字を配列に格納
-    const resultNum = Number(nowNumber.concat(String(num)));
+    const resultNumString = (nowNumber.startsWith('0') && num == 0 && !nowNumber.includes('.')) ? nowNumber : nowNumber.concat(String(num));
+    const resultNum = Number(resultNumString);
     const resultNums = [...nums];
     resultNums.splice(resultNums.length - 1, 1, resultNum);
     
     setNums(resultNums);
-    setNowNumber(String(resultNum));
-    setDisplay(resultNum);
+    setNowNumber(resultNumString);
+    setDisplay(resultNumString);
   }
   
   function handleOperation(ope) {
@@ -134,7 +135,7 @@ function Calculator(props) {
   }
   
   function handleDecimal() {
-    if (nowNumber.slice(-1) != '.') {
+    if (!nowNumber.includes('.')) {
       const nowNum = nowNumber.concat('.');
       
       const resultNums = [...nums];
