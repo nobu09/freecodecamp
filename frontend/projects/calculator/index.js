@@ -68,8 +68,11 @@ function Calculator(props) {
   const [nowNumber, setNowNumber] = React.useState('');
   
   function handleClearClick() {
-    clear();
+    setResult(0);
     setDisplay(0);
+    setNums([0]);
+    setNowNumber('');
+    setOperators([]);
   }
   
   function handleNumsClick(num) {
@@ -86,6 +89,7 @@ function Calculator(props) {
   
   function handleOperation(ope) {
     setNowNumber('');
+    console.log(`nums: ${nums}, operators: ${operators}, nowNumber: ${nowNumber}, ope: ${ope}`)
     
     // 計算する
     if (nums.length > 1) {
@@ -105,19 +109,15 @@ function Calculator(props) {
     // 計算
     const resultCalculate = calculate(nums, result, operators[operators.length - 1]);
     setDisplay(resultCalculate);
-    clear();
-  }
-  
-  function clear() {
-    setNums([0]);
+    setNums([resultCalculate]);
+    setNowNumber(String(resultCalculate));
     setOperators([]);
-    setResult(0);
-    setNowNumber('');
   }
   
   function calculate(nums, result, operator) {
-    const num1 = nums.length == 2 ? nums[0] : result;
+    const num1 = nums.length <= 2 ? nums[0] : result;
     const num2 = nums[nums.length - 1];
+    console.log(`num1: ${num1}, num2: ${num2}, operator: ${operator}, nowNumber: ${nowNumber}`)
     switch(operator) {
       case '+':
         return num1 + num2;
