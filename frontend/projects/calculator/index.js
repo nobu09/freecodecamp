@@ -1,4 +1,4 @@
-const numbers = [
+const numbers = [  
   {
     name: 'zero',
     value: 0
@@ -66,6 +66,7 @@ function Calculator(props) {
   const [operators, setOperators] = React.useState([]);
   const [display, setDisplay] = React.useState('0');
   const [nowNumber, setNowNumber] = React.useState('');
+  const [nowOperator, setNowOperator] = React.useState('');
   
   function handleClearClick() {
     setResult(0);
@@ -73,6 +74,7 @@ function Calculator(props) {
     setNums([0]);
     setNowNumber('');
     setOperators([]);
+    setNowOperator('');
   }
   
   function handleNumsClick(num) {
@@ -85,11 +87,15 @@ function Calculator(props) {
     setNums(resultNums);
     setNowNumber(resultNumString);
     setDisplay(resultNumString);
+    setNowOperator('');
   }
   
   function handleOperation(ope) {
+    if (ope == '-' && nowOperator.length == 1) {
+      setNowNumber(ope);
+      return
+    }
     setNowNumber('');
-    console.log(`nums: ${nums}, operators: ${operators}, nowNumber: ${nowNumber}, ope: ${ope}`)
     
     // 計算する
     if (nums.length > 1) {
@@ -101,6 +107,7 @@ function Calculator(props) {
     const resultOpes = [...operators];
     resultOpes.push(ope);
     
+    setNowOperator(ope);
     setOperators(resultOpes);
     setDisplay(ope);
   }
@@ -112,6 +119,7 @@ function Calculator(props) {
     setNums([resultCalculate]);
     setNowNumber(String(resultCalculate));
     setOperators([]);
+    setNowOperator('');
   }
   
   function calculate(nums, result, operator) {
