@@ -91,6 +91,7 @@ function Calculator(props) {
   }
   
   function handleOperation(ope) {
+    console.log(ope);
     if (ope == '-' && nowOperator.length == 1) {
       setNowNumber(ope);
       return
@@ -123,6 +124,7 @@ function Calculator(props) {
   }
   
   function calculate(nums, result, operator) {
+    console.log(`nums: ${nums}`)
     const num1 = nums.length <= 2 ? nums[0] : result;
     const num2 = nums[nums.length - 1];
     console.log(`num1: ${num1}, num2: ${num2}, operator: ${operator}, nowNumber: ${nowNumber}`)
@@ -195,3 +197,4 @@ ReactDOM.render(
   <Calculator />,
   document.getElementById("root")
 );
+
