@@ -82,8 +82,7 @@ function Calculator(props) {
   }
   
   function handleNumsClick(num) {
-    const nowNumber = nowNum.concat(String(num));
-    console.log(nowNumber);
+    const nowNumber = nowNum != '0' ? nowNum.concat(String(num)) : String(num);
     setNowNum(nowNumber);
 
     // 次の数字を入力しはじめたらその時点の演算子を演算子配列にいれる
@@ -103,7 +102,7 @@ function Calculator(props) {
     console.log(nums);
     newNums = [...nums];
     newNums.splice(newNums.length - 1, 1, Number(nowNum));
-    console.log(newNums);
+    
     setNums([...newNums, 0]);
     setNowNum('0')
     
@@ -112,7 +111,9 @@ function Calculator(props) {
   
   function handleEqual() {
     newNums = [...nums];
-    newNums.splice(newNums.length - 1, 1, Number(nowNum));    
+    newNums.splice(newNums.length - 1, 1, Number(nowNum));
+    
+    // 計算
     let calculateResult = newNums.reduce((result, val, index, numsArray) => {
       if (index == 0) {
         return val;
@@ -149,11 +150,11 @@ function Calculator(props) {
       const nowNumber = nowNum.concat('.');
       
       const resultNums = [...nums];
-      resultNums.splice(resultNums.length - 1, 1, Number(nowNumer));
+      resultNums.splice(resultNums.length - 1, 1, Number(nowNumber));
       
       setNums(resultNums);
       setDisplay(nowNumber);
-      setNowNumber(nowNumer);
+      setNowNum(nowNumber);
     }
   }
   
