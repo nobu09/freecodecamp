@@ -61,73 +61,65 @@ const operations = [
 ]
 
 function Calculator(props) {
-  const [result, setResult] = React.useState(0);
-  const [nums, setNums] = React.useState([0]);
-  const [operators, setOperators] = React.useState([]);
   const [display, setDisplay] = React.useState('0');
-  const [nowNumber, setNowNumber] = React.useState('');
+  const [result, setResult] = React.useState(0);
+  
+  // 数字と演算子を入れた配列
+  const [nums, setNums] = React.useState([0]);
+  const [operators, setOperators] = React.useState(['']);
+  
+  // 現在の数字と演算子を入れた変数
+  const [nowNum, setNowNum] = React.useState(0);
   const [nowOperator, setNowOperator] = React.useState('');
   
   function handleClearClick() {
+    setDisplay('0');
     setResult(0);
-    setDisplay(0);
     setNums([0]);
-    setNowNumber('');
-    setOperators([]);
+    setOperators(['']);
+    setNowNum(0);
     setNowOperator('');
   }
   
   function handleNumsClick(num) {
-    // 数字を配列に格納
-    const resultNumString = (nowNumber.startsWith('0') && num == 0 && !nowNumber.includes('.')) ? nowNumber : nowNumber.concat(String(num));
-    const resultNum = Number(resultNumString);
-    const resultNums = [...nums];
-    resultNums.splice(resultNums.length - 1, 1, resultNum);
-    
-    setNums(resultNums);
-    setNowNumber(resultNumString);
-    setDisplay(resultNumString);
-    setNowOperator('');
+    setNowNum(num);
+
+    // 次の数字が確定したらその時点の演算子を演算子配列にいれる
+    if (nowOperator != '') {
+      newOperators = [...operators];
+      newOperators.splice(newOperators.length - 1, 1, nowOperator);
+      setOperators([...newOperators, '']);
+    }
   }
   
   function handleOperation(ope) {
-    console.log(ope);
-    if (ope == '-' && nowOperator.length == 1) {
-      setNowNumber(ope);
-      return
-    }
-    setNowNumber('');
-    
-    // 計算する
-    if (nums.length > 1) {
-      setResult(calculate(nums, result, operators[operators.length - 1]));
-    }
-    setNums([...nums, 0]);
-    
-    // 演算子を配列に格納
-    const resultOpes = [...operators];
-    resultOpes.push(ope);
-    
     setNowOperator(ope);
-    setOperators(resultOpes);
-    setDisplay(ope);
+  
+    // 次の演算子が確定したらその時点の数字を数字配列にいれて次を0にする
+    newNums = [...nums];
+    newNums.splice(newNums.length - 1, 1, nowNum);
+    setNums([...newNums, 0]);
   }
   
   function handleEqual() {
-    // 計算
-    const resultCalculate = calculate(nums, result, operators[operators.length - 1]);
-    setDisplay(resultCalculate);
-    setNums([resultCalculate]);
-    setNowNumber(String(resultCalculate));
-    setOperators([]);
-    setNowOperator('');
+    newNums = [...nums];
+    newNums.splice(newNums.length - 1, 1, nowNum);    
+
+    let calculateResult = newNums.reduce((result, val, index, numsArray) => {
+      if (index == 0) {
+        return val;
+      }
+      result = calculate(result, numsArray[index], operators[index-1]);
+
+      return result;
+    }, 0)
+    
+    setResult(calculateResult);
+    setDisplay(calculateResult);
   }
   
-  function calculate(nums, result, operator) {
-    console.log(`nums: ${nums}`)
-    const num1 = nums.length <= 2 ? nums[0] : result;
-    const num2 = nums[nums.length - 1];
-    console.log(`num1: ${num1}, num2: ${num2}, operator: ${operator}, nowNumber: ${nowNumber}`)
+  function calculate(num1, num2, operator) {
+    console.log(`num1: ${num1}, num2: ${num2}, operator: ${operator}`)
     switch(operator) {
       case '+':
         return num1 + num2;
@@ -145,15 +137,15 @@ function Calculator(props) {
   }
   
   function handleDecimal() {
-    if (!nowNumber.includes('.')) {
-      const nowNum = nowNumber.concat('.');
+    if (!nowNum.includes('.')) {
+      const nowNumber = nowNum.concat('.');
       
       const resultNums = [...nums];
-      resultNums.splice(resultNums.length - 1, 1, Number(nowNum));
+      resultNums.splice(resultNums.length - 1, 1, Number(nowNumer));
       
       setNums(resultNums);
-      setDisplay(nowNum);
-      setNowNumber(nowNum);
+      setDisplay(nowNumber);
+      setNowNumber(nowNumer);
     }
   }
   
@@ -197,4 +189,3 @@ ReactDOM.render(
   <Calculator />,
   document.getElementById("root")
 );
-
