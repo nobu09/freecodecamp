@@ -1,4 +1,4 @@
-const numbers = [  
+const numbers = [
   {
     name: 'zero',
     value: 0
@@ -63,15 +63,15 @@ const operations = [
 function Calculator(props) {
   const [display, setDisplay] = React.useState('0');
   const [result, setResult] = React.useState(0);
-  
+
   // 数字と演算子を入れた配列
   const [nums, setNums] = React.useState([0]);
   const [operators, setOperators] = React.useState(['']);
-  
+
   // 現在の数字と演算子を入れた変数
   const [nowNum, setNowNum] = React.useState('0');
   const [nowOperator, setNowOperator] = React.useState('');
-  
+
   function handleClearClick() {
     setDisplay('0');
     setResult(0);
@@ -80,7 +80,7 @@ function Calculator(props) {
     setNowNum('0');
     setNowOperator('');
   }
-  
+
   function handleNumsClick(num) {
     const nowNumber = nowNum != '0' ? nowNum.concat(String(num)) : String(num);
     setNowNum(nowNumber);
@@ -90,29 +90,45 @@ function Calculator(props) {
       newOperators = [...operators];
       newOperators.splice(newOperators.length - 1, 1, nowOperator);
       setOperators([...newOperators, '']);
+      setNowOperator('');
     }
-    
+
     setDisplay(nowNumber);
   }
-  
+
   function handleOperation(ope) {
+    if (nowOperator != '') {
+      switch(ope) {
+        case '-':
+          setNowNum('-');
+          setDisplay(ope);
+          return;
+        case '+':
+        case 'x':
+        case '/':
+          setNowNum('0');
+          setNowOperator(ope);
+          setDisplay(ope);
+          return;
+      }
+    }
+
     setNowOperator(ope);
-  
-    // 次の演算子が確定したらその時点の数字を数字配列にいれて次を0にする
-    console.log(nums);
-    newNums = [...nums];
+
+    // 次の演算子を入力しはじめたらその時点の数字を数字配列にいれて次を0にする
+    let newNums = [...nums];
     newNums.splice(newNums.length - 1, 1, Number(nowNum));
-    
+
     setNums([...newNums, 0]);
-    setNowNum('0')
-    
+    setNowNum('0');
+
     setDisplay(ope);
   }
-  
+
   function handleEqual() {
-    newNums = [...nums];
+    let newNums = [...nums];
     newNums.splice(newNums.length - 1, 1, Number(nowNum));
-    
+
     // 計算
     let calculateResult = newNums.reduce((result, val, index, numsArray) => {
       if (index == 0) {
@@ -122,13 +138,12 @@ function Calculator(props) {
 
       return result;
     }, 0)
-    
+
     setResult(calculateResult);
     setDisplay(calculateResult);
   }
-  
+
   function calculate(num1, num2, operator) {
-    console.log(`num1: ${num1} ${typeof num1}, num2: ${num2} ${typeof num2}, operator: ${operator}`)
     switch(operator) {
       case '+':
         return num1 + num2;
@@ -144,20 +159,19 @@ function Calculator(props) {
         break;
     }
   }
-  
+
   function handleDecimal() {
     if (!nowNum.includes('.')) {
       const nowNumber = nowNum.concat('.');
-      
       const resultNums = [...nums];
       resultNums.splice(resultNums.length - 1, 1, Number(nowNumber));
-      
+
       setNums(resultNums);
       setDisplay(nowNumber);
       setNowNum(nowNumber);
     }
   }
-  
+
   return (
     <div id="calcuator">
       <div id="display">{display}</div>
