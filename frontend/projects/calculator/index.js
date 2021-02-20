@@ -69,7 +69,7 @@ function Calculator(props) {
   const [operators, setOperators] = React.useState(['']);
   
   // 現在の数字と演算子を入れた変数
-  const [nowNum, setNowNum] = React.useState(0);
+  const [nowNum, setNowNum] = React.useState('0');
   const [nowOperator, setNowOperator] = React.useState('');
   
   function handleClearClick() {
@@ -77,34 +77,42 @@ function Calculator(props) {
     setResult(0);
     setNums([0]);
     setOperators(['']);
-    setNowNum(0);
+    setNowNum('0');
     setNowOperator('');
   }
   
   function handleNumsClick(num) {
-    setNowNum(num);
+    const nowNumber = nowNum.concat(String(num));
+    console.log(nowNumber);
+    setNowNum(nowNumber);
 
-    // 次の数字が確定したらその時点の演算子を演算子配列にいれる
+    // 次の数字を入力しはじめたらその時点の演算子を演算子配列にいれる
     if (nowOperator != '') {
       newOperators = [...operators];
       newOperators.splice(newOperators.length - 1, 1, nowOperator);
       setOperators([...newOperators, '']);
     }
+    
+    setDisplay(nowNumber);
   }
   
   function handleOperation(ope) {
     setNowOperator(ope);
   
     // 次の演算子が確定したらその時点の数字を数字配列にいれて次を0にする
+    console.log(nums);
     newNums = [...nums];
-    newNums.splice(newNums.length - 1, 1, nowNum);
+    newNums.splice(newNums.length - 1, 1, Number(nowNum));
+    console.log(newNums);
     setNums([...newNums, 0]);
+    setNowNum('0')
+    
+    setDisplay(ope);
   }
   
   function handleEqual() {
     newNums = [...nums];
-    newNums.splice(newNums.length - 1, 1, nowNum);    
-
+    newNums.splice(newNums.length - 1, 1, Number(nowNum));    
     let calculateResult = newNums.reduce((result, val, index, numsArray) => {
       if (index == 0) {
         return val;
@@ -119,7 +127,7 @@ function Calculator(props) {
   }
   
   function calculate(num1, num2, operator) {
-    console.log(`num1: ${num1}, num2: ${num2}, operator: ${operator}`)
+    console.log(`num1: ${num1} ${typeof num1}, num2: ${num2} ${typeof num2}, operator: ${operator}`)
     switch(operator) {
       case '+':
         return num1 + num2;
