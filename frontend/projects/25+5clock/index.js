@@ -3,6 +3,10 @@ function PomodoloClock() {
     <>
       <LengthControl kind="break" label="Break" default={5} />
       <LengthControl kind="session" label="Session" default={25} />
+      <div id="timer-label">Session</div>
+      <div id="time-left">25:00</div>
+      <button id="start_stop"><i class="fas fa-play-circle"></i></button>
+      <button id="reset"><i class="fas fa-undo"></i></button>
     </>
   )
 }
@@ -18,7 +22,6 @@ function LengthControl(props) {
       <button id={`${props.kind}-decrement`} className="btn-level ">
         <i class="fas fa-caret-down"></i>
       </button>
-
     </div>
   )
 }
