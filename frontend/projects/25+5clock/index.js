@@ -1,4 +1,12 @@
-function PomodoloClock() {
+function PomodoloClock(props) {
+  const [breakLen, setBreakLen] = React.useState(5);
+  const [sessionLen, setSessionLen] = React.useState(25);
+
+  const handleClickReset = () => {
+    setBreakLen(5);
+    setSessionLen(25);
+  }
+
   return (
     <>
       <LengthControl kind="break" label="Break" default={5} />
