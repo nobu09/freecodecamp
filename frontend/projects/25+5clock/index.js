@@ -5,8 +5,10 @@ function PomodoloClock(props) {
   const [timer, setTimer] = React.useState(false);
 
   React.useEffect(() => {
+    console.log(`setInterval: ${timer}`);
     if (timer) {
-      setInterval(countDown, 1000);
+      const timerId = setInterval(countDown, 1000);
+      return () => clearInterval(timerId);
     }
   }, [timer]);
 
