@@ -5,6 +5,11 @@ function PomodoloClock(props) {
   const [sessionLen, setSessionLen] = React.useState(defaultSession);
   const [timeLeft, setTimeLeft] = React.useState(defaultTimeLeft);
   const [timer, setTimer] = React.useState(false);
+  const [isSession, setIsSession] = React.useState(true);
+
+  const countDown = () => {
+    setTimeLeft(prevTimeLeft => prevTimeLeft - 1);
+  }
 
   React.useEffect(() => {
     if (timer) {
@@ -13,17 +18,23 @@ function PomodoloClock(props) {
     }
   }, [timer]);
 
-  const countDown = () => {
-    setTimeLeft(prevTimeLeft => {
-      return (prevTimeLeft - 1) > 0 ? prevTimeLeft - 1 : sessionLen;
-    })
-  }
+  React.useEffect(() => {
+    if (timeLeft == -1) {
+      if (isSession) {
+        setTimeLeft(breakLen * 60);
+      } else {
+        setTimeLeft(sessionLen * 60);
+      }
+      setIsSession(!isSession);
+    }
+  }, [timeLeft]);
 
   const handleClickReset = () => {
     setBreakLen(5);
     setSessionLen(defaultSession);
     setTimeLeft(defaultTimeLeft);
     setTimer(false);
+    setIsSession(true);
   }
 
   const handleStartStop = () => {
@@ -40,7 +51,7 @@ function PomodoloClock(props) {
     <>
       <LengthControl kind="break" label="Break" length={breakLen} />
       <LengthControl kind="session" label="Session" length={sessionLen} />
-      <div id="timer-label">Session</div>
+      <div id="timer-label">{isSession ? 'Session' : 'Break'}</div>
       <div id="time-left">{displayTimeLeft()}</div>
       <button id="start_stop" onClick={handleStartStop}><i className="fas fa-play-circle"></i></button>
       <button id="reset" onClick={handleClickReset} ><i className="fas fa-undo"></i></button>
