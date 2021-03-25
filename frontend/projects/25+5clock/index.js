@@ -25,10 +25,21 @@ function PomodoloClock(props) {
       } else {
         setTimeLeft(sessionLen * 60);
       }
-
       setIsSession(!isSession);
     }
   }, [timeLeft]);
+
+  React.useEffect(() => {
+    if (isSession) {
+      setTimeLeft(sessionLen * 60);
+    }
+  }, [sessionLen])
+
+  React.useEffect(() => {
+    if (!isSession) {
+      setTimeLeft(breakLen * 60);
+    }
+  }, [breakLen])
 
   const handleClickReset = () => {
     setBreakLen(5);
