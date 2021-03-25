@@ -25,6 +25,7 @@ function PomodoloClock(props) {
       } else {
         setTimeLeft(sessionLen * 60);
       }
+
       setIsSession(!isSession);
     }
   }, [timeLeft]);
@@ -41,6 +42,30 @@ function PomodoloClock(props) {
     setTimer(!timer);
   }
 
+  const onClickSessionIncrement = () => {
+    if (sessionLen < 60) {
+      setSessionLen(sessionLen + 1);
+    }
+  }
+
+  const onClickSessionDecrement = () => {
+    if (sessionLen > 1) {
+      setSessionLen(sessionLen - 1);
+    }
+  }
+
+  const onClickBreakIncrement = () => {
+    if (breakLen < 60) {
+      setBreakLen(breakLen + 1);
+    }
+  }
+
+  const onClickBreakDecrement = () => {
+    if (breakLen > 1) {
+      setBreakLen(breakLen - 1);
+    }
+  }
+
   function displayTimeLeft() {
     const minutes = String(Math.floor(timeLeft / 60));
     const seconds = String(timeLeft % 60);
@@ -49,8 +74,8 @@ function PomodoloClock(props) {
 
   return (
     <>
-      <LengthControl kind="break" label="Break" length={breakLen} />
-      <LengthControl kind="session" label="Session" length={sessionLen} />
+      <LengthControl kind="break" label="Break" length={breakLen} onClickIncrement={onClickBreakIncrement} onClickDecrement={onClickBreakDecrement}/>
+      <LengthControl kind="session" label="Session" length={sessionLen} onClickIncrement={onClickSessionIncrement} onClickDecrement={onClickSessionDecrement} />
       <div id="timer-label">{isSession ? 'Session' : 'Break'}</div>
       <div id="time-left">{displayTimeLeft()}</div>
       <button id="start_stop" onClick={handleStartStop}><i className="fas fa-play-circle"></i></button>
@@ -63,11 +88,11 @@ function LengthControl(props) {
   return (
     <div className="length-control">
       <div id={`${props.kind}-label`}>{props.label} length</div>
-      <button id={`${props.kind}-increment`} className="btn-level">
+      <button id={`${props.kind}-increment`} className="btn-level" onClick={props.onClickIncrement}>
         <i className="fas fa-caret-up"></i>
       </button>
       <div id={`${props.kind}-length`}>{props.length}</div>
-      <button id={`${props.kind}-decrement`} className="btn-level ">
+      <button id={`${props.kind}-decrement`} className="btn-level" onClick={props.onClickDecrement}>
         <i className="fas fa-caret-down"></i>
       </button>
     </div>
