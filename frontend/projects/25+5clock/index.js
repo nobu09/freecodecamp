@@ -19,7 +19,7 @@ function PomodoloClock(props) {
   }, [timer]);
 
   React.useEffect(() => {
-    if (timeLeft == -1) {
+    if (timeLeft < 0) {
       if (isSession) {
         setTimeLeft(breakLen * 60);
       } else {
