@@ -20,14 +20,19 @@ function PomodoloClock(props) {
 
   React.useEffect(() => {
     if (timeLeft == 0) {
-      if (isSession) {
-        setTimeLeft(breakLen * 60);
-      } else {
-        setTimeLeft(sessionLen * 60);
-      }
       setIsSession(!isSession);
+      const audio = document.getElementById("beep");
+      audio.play();
     }
   }, [timeLeft]);
+
+  React.useEffect(() => {
+    if (isSession) {
+      setTimeLeft(sessionLen * 60);
+    } else {
+      setTimeLeft(breakLen * 60);
+    }
+  }, [isSession])
 
   React.useEffect(() => {
     if (isSession) {
@@ -47,6 +52,9 @@ function PomodoloClock(props) {
     setTimeLeft(defaultTimeLeft);
     setTimer(false);
     setIsSession(true);
+    const audio = document.getElementById("beep");
+    audio.pause();
+    audio.currentTime = 0;
   }
 
   const handleStartStop = () => {
@@ -91,6 +99,7 @@ function PomodoloClock(props) {
       <div id="time-left">{displayTimeLeft()}</div>
       <button id="start_stop" onClick={handleStartStop}><i className="fas fa-play-circle"></i></button>
       <button id="reset" onClick={handleClickReset} ><i className="fas fa-undo"></i></button>
+      <audio id="beep" src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav" />
     </>
   )
 }
