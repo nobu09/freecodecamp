@@ -1,0 +1,17 @@
+.btn-level {
+  background-color: gray;
+  color: white;
+  border: 0px none;
+  border-radius: 2px;
+  margin: 2px;
+}
+
+.length-control {
+  text-align: center;
+  font-size: 12px;
+}
+
+.length {
+  display: inline;
+}
+

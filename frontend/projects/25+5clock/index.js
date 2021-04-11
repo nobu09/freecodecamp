@@ -25,7 +25,7 @@ function PomodoloClock(props) {
       audio.play();
     }
   }, [timeLeft]);
-
+  
   React.useEffect(() => {
     if (isSession) {
       setTimeLeft(sessionLen * 60);
@@ -75,7 +75,7 @@ function PomodoloClock(props) {
 
   const onClickBreakIncrement = () => {
     if (breakLen < 60) {
-      setBreakLen(breakLen + 1);
+      setBreakLen(breakLen + 1); 
     }
   }
 
@@ -92,26 +92,26 @@ function PomodoloClock(props) {
   }
 
   return (
-    <>
-      <LengthControl kind="break" label="Break" length={breakLen} onClickIncrement={onClickBreakIncrement} onClickDecrement={onClickBreakDecrement}/>
-      <LengthControl kind="session" label="Session" length={sessionLen} onClickIncrement={onClickSessionIncrement} onClickDecrement={onClickSessionDecrement} />
+    <div className="container">
+      <div className="row">
+        <LengthControl style="offset-sm-3 col-sm-3" kind="break" label="Break" length={breakLen} onClickIncrement={onClickBreakIncrement} onClickDecrement={onClickBreakDecrement}/>
+        <LengthControl style="col-sm-3" kind="session" label="Session" length={sessionLen} onClickIncrement={onClickSessionIncrement} onClickDecrement={onClickSessionDecrement} />
+      </div>
       <div id="timer-label">{isSession ? 'Session' : 'Break'}</div>
       <div id="time-left">{displayTimeLeft()}</div>
       <button id="start_stop" onClick={handleStartStop}><i className="fas fa-play-circle"></i></button>
       <button id="reset" onClick={handleClickReset} ><i className="fas fa-undo"></i></button>
       <audio id="beep" src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav" />
-    </>
+    </div>
   )
 }
 
 function LengthControl(props) {
   return (
-    <div className="length-control">
+    <div className={`length-control ${props.style}`}>
       <div id={`${props.kind}-label`}>{props.label} length</div>
-      <button id={`${props.kind}-increment`} className="btn-level" onClick={props.onClickIncrement}>
-        <i className="fas fa-caret-up"></i>
-      </button>
-      <div id={`${props.kind}-length`}>{props.length}</div>
+      <button id={`${props.kind}-increment`} className="btn-level" onClick={props.onClickIncrement}>+</button>
+      <div id={`${props.kind}-length`} className="length">{props.length}</div>
       <button id={`${props.kind}-decrement`} className="btn-level" onClick={props.onClickDecrement}>
         <i className="fas fa-caret-down"></i>
       </button>
