@@ -1,3 +1,8 @@
+body#pomodolo-clock {
+  background-color: cornflowerblue;
+  font-family: 'Raleway', sans-serif;
+}
+
 .btn-level {
   background-color: gray;
   color: white;

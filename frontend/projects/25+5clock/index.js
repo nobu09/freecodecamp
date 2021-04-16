@@ -25,7 +25,7 @@ function PomodoloClock(props) {
       audio.play();
     }
   }, [timeLeft]);
-  
+
   React.useEffect(() => {
     if (isSession) {
       setTimeLeft(sessionLen * 60);
@@ -112,9 +112,7 @@ function LengthControl(props) {
       <div id={`${props.kind}-label`}>{props.label} length</div>
       <button id={`${props.kind}-increment`} className="btn-level" onClick={props.onClickIncrement}>+</button>
       <div id={`${props.kind}-length`} className="length">{props.length}</div>
-      <button id={`${props.kind}-decrement`} className="btn-level" onClick={props.onClickDecrement}>
-        <i className="fas fa-caret-down"></i>
-      </button>
+      <button id={`${props.kind}-decrement`} className="btn-level" onClick={props.onClickDecrement}>-</button>
     </div>
   )
 }
