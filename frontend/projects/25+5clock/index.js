@@ -75,7 +75,7 @@ function PomodoloClock(props) {
 
   const onClickBreakIncrement = () => {
     if (breakLen < 60) {
-      setBreakLen(breakLen + 1); 
+      setBreakLen(breakLen + 1);
     }
   }
 
@@ -98,9 +98,17 @@ function PomodoloClock(props) {
         <LengthControl style="col-sm-3" kind="session" label="Session" length={sessionLen} onClickIncrement={onClickSessionIncrement} onClickDecrement={onClickSessionDecrement} />
       </div>
       <div id="timer-label">{isSession ? 'Session' : 'Break'}</div>
-      <div id="time-left">{displayTimeLeft()}</div>
-      <button id="start_stop" onClick={handleStartStop}><i className="fas fa-play-circle"></i></button>
-      <button id="reset" onClick={handleClickReset} ><i className="fas fa-undo"></i></button>
+      <div id="timer-circle">
+        <div id="time-left">{displayTimeLeft()}</div>
+      </div>
+
+      <div className="row">
+        <div className="btn-large-group offset-sm-4 col-sm-4">
+          <button id="start_stop" className="btn-large" onClick={handleStartStop}>Start / Stop</button>
+          <button id="reset" className="btn-large" onClick={handleClickReset} >Reset</button>
+        </div>
+      </div>
+
       <audio id="beep" src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav" />
     </div>
   )

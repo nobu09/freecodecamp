@@ -1,22 +1,83 @@
 body#pomodolo-clock {
-  background-color: cornflowerblue;
+  background-color: turquoise;
   font-family: 'Raleway', sans-serif;
+  color: white;
 }
 
 .btn-level {
-  background-color: gray;
-  color: white;
+  background-color: white;
+  color: turquoise;
+  width: 25px;
+  height: 25px;
   border: 0px none;
-  border-radius: 2px;
-  margin: 2px;
+  border-radius: 5px;
+  box-shadow: gray 2px 2px 2px;
+  margin: 8px;
+}
+
+.btn-level:active {
+  background-color: turquoise;
+  color: white;
+}
+
+.btn-level:focus {
+  outline: none;
 }
 
 .length-control {
   text-align: center;
-  font-size: 12px;
+  font-size: 15px;
+  margin: 15px 0 0;
 }
 
 .length {
   display: inline;
+  width: 35px;
+  margin: 0 3px;
 }
 
+#timer-label {
+  text-align: center;
+  font-size: 25px;
+  margin: 15px 0 0;
+}
+
+#timer-circle {
+  display: flex;
+  min-heigth: 100vh;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  border: white 1px solid;
+  margin: 5px auto 25px;
+}
+
+#time-left {
+  font-size: 60px;
+  margin: auto;
+}
+
+.btn-large-group {
+  text-align: center;
+}
+
+.btn-large {
+  background-color: white;
+  color: turquoise;
+  height: 30px;
+  border: 0px none;
+  border-radius: 5px;
+  box-shadow: gray 2px 2px 2px;
+  margin: 8px;
+  font-size: 14px;
+}
+
+.btn-large:active {
+  background-color: turquoise;
+  color: white;
+  border: none;
+}
+
+.btn-large:focus {
+  outline: none;
+}
