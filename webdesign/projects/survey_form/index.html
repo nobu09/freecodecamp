@@ -7,17 +7,19 @@ Please read the README below in the JS Editor before beginning. Feel free to del
 - The freeCodeCamp Team 
 
 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
 <main class="container">
   <header>
     <h1 id="title">freeCodeCamp Survey Form</h1>
   <p id="description">Thank you for taking the time to help us improve the platform</p>
   </header>
-
+  
   <form id="survey-form">
-    <label for="name">Name</label>
-    <input id="name" type="text" name="name" placeholder="Enter your Name" required>
+    <label for="name" class="form-label">Name</label>
+    <input id="name" type="text" class="form-control" name="name" placeholder="Enter your Name" required>
     
-    <label for="email">Email</label>
-    <input id="email" type="email" name="email" placeholder="Enter your Email" required>
+    <label for="email" class="form-label">Email</label>
+    <input id="email" type="email" class="form-control" name="email" placeholder="Enter your Email" required>
   </form>
 </main>
