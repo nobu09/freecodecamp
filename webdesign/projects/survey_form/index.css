@@ -1,3 +1,11 @@
 header {
   text-align: center;
 }
+
+#submit {
+  margin-top: 20px;
+}
+
+.form-label {
+  margin-top: 10px;
+}
