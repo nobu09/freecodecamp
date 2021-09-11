@@ -38,6 +38,7 @@ form {
   flex-direction: column;
   align-items: center;
   gap: 5px;
+  width: 100%
 }
 
 form #email {
@@ -48,7 +49,6 @@ form #submit {
   max-width: 100%;
 }
 
-
 iframe {
   margin-top: 15px;
   width: 600px;
@@ -58,5 +58,13 @@ iframe {
 @media (max-width: 600px) {
   header {
     flex-wrap: wrap;
+  }
+  
+  #main {
+    margin-top: 130px;
+  }
+  
+  form #email {
+    width: 80%;
   }
 }
