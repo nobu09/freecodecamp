@@ -1,0 +1,21 @@
+header {
+  font-size: 1.8em;
+}
+
+section header {
+  font-size: 1.7em;
+}
+
+#navbar {
+  position: fixed;
+  left: 0;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1.5px solid gray;
+  height: 100%;
+}
+
+#main-doc {
+  margin-left: 300px;
+}
