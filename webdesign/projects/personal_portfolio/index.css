@@ -1,0 +1,18 @@
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  gap: 10px;
+  list-style: none;
+  margin-right: 50px;
+}
+
+#welcome-section {
+  margin-top: 60px;
+}
