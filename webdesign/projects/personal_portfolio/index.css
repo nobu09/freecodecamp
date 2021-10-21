@@ -13,7 +13,6 @@ nav {
   left: 0;
   width: 100%;
   background-color: navy;
-
 }
 
 ul {
@@ -27,6 +26,15 @@ ul {
 
 #welcome-section {
   margin-top: 60px;
+}
+
+.projects-tiles {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-tile {
+  font-size: 1.3em;
 }
 
 @media (max-width: 500px) {
